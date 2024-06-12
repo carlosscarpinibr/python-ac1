@@ -1,3 +1,12 @@
+def nuevoDestino():
+    codDest = input('Entra el codigo del destino: ')
+    nomDest = input('Entra el nombre del destino: ')
+    precDest = input('Entra el precio del destino: ')
+    
+    destino = {'codigoDest' : codDest , 'nombreDest' : nomDest , 'precioDest' : precDest}
+    
+    return destino
+
 def principal():
     prompt = '''    
                     Menu - Agencia de viajes
@@ -12,6 +21,10 @@ def principal():
                 0. Salir
             '''
     
+    tablaDestinos = []
+    tablaClientes = []
+    tablaReservas = []
+    
     
     menu = 0
     while menu != '0':
@@ -19,6 +32,7 @@ def principal():
         menu=input('Entre una opción: ')
         if menu == '1':
             print('Añadir un nuevo destino')
+            tablaDestinos.append(nuevoDestino())
         elif menu == '2':
             print('Añadir un nuevo cliente')
         elif menu == '3':
@@ -27,6 +41,7 @@ def principal():
             print('Cancelar una reserva')
         elif menu == '5':
             print('Mostrar todos los destinos')
+            print(tablaDestinos)
         elif menu == '6':
             print('Mostrar todos los clientes')
         elif menu == '7':
