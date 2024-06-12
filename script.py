@@ -6,6 +6,14 @@ def nuevoDestino():
     destino = {'codigoDest' : codDest , 'nombreDest' : nomDest , 'precioDest' : precDest}
     
     return destino
+def nuevoCliente():
+    idCli = input('Entre un ID para el cliente: ')
+    nomCli = input('Entre el nombre del cliente: ')
+    
+    cliente = {'idCliente' : idCli , 'nombreCli' : nomCli}
+    
+    return cliente
+
 
 def principal():
     prompt = '''    
@@ -35,6 +43,7 @@ def principal():
             tablaDestinos.append(nuevoDestino())
         elif menu == '2':
             print('Añadir un nuevo cliente')
+            tablaClientes.append(nuevoCliente())
         elif menu == '3':
             print('Realizar una reserva')
         elif menu == '4':
@@ -44,6 +53,7 @@ def principal():
             print(tablaDestinos)
         elif menu == '6':
             print('Mostrar todos los clientes')
+            print(tablaClientes)
         elif menu == '7':
             print('Mostrar todas las reservas')
         elif menu == '0':
