@@ -1,54 +1,7 @@
-# programa_principal.py
+from gestiones.gestionClientes import anadirCliente, mostrarClientes
+from gestiones.gestionDestinos import anadirDestino, mostrarDestinos
+from gestiones.gestionReservas import realizarReserva, cancelarReserva, mostrarReservas
 
-from gestiones.gestionClientes import (
-    anadirCliente,
-    clienteExiste,
-    obtenerNombreCliente,
-    mostrarClientes,
-    clientes
-)
-from gestiones.gestionDestinos import (
-    anadirDestino,
-    destinoExiste,
-    obtenerNombreDestino,
-    mostrarDestinos,
-    destinos
-)
-
-reservas = []
-
-# Función para realizar una reserva
-def realizarReserva(codigoDestino, idCliente):
-    if destinoExiste(codigoDestino) and clienteExiste(idCliente):
-        reserva = {'codigo_destino': codigoDestino, 'id_cliente': idCliente}
-        reservas.append(reserva)
-        print(f'Reserva realizada para el cliente {idCliente} al destino {codigoDestino}.')
-    else:
-        print('Error: Código de destino o ID de cliente inválido.')
-
-# Función para cancelar una reserva
-def cancelarReserva(codigoDestino, idCliente):
-    reservaCancelada = False
-    for reserva in reservas:
-        if reserva['codigo_destino'] == codigoDestino and reserva['id_cliente'] == idCliente:
-            reservas.remove(reserva)
-            print(f'Reserva cancelada para el cliente {idCliente} al destino {codigoDestino}.')
-            reservaCancelada = True
-            break
-    if not reservaCancelada:
-        print('Error: Reserva no encontrada.')
-
-# Función para mostrar todas las reservas
-def mostrarReservas():
-    print('Reservas:')
-    for reserva in reservas:
-        nombreCliente = obtenerNombreCliente(reserva['id_cliente'])
-        nombreDestino = obtenerNombreDestino(reserva['codigo_destino'])
-
-        if nombreCliente and nombreDestino:
-            print(f"Cliente: {nombreCliente} - Destino: {nombreDestino}")
-
-# Función principal para ejecutar el programa
 def main():
     while True:
         print("\n1. Añadir destino")
