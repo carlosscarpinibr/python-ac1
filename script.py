@@ -1,8 +1,8 @@
 import os
 
 def limpiar_pantalla():
-    #os.system('clear') #clear screen mac
-    os.system('cls') #clear screen windows
+    os.system('clear') #clear screen mac
+    #os.system('cls') #clear screen windows
     
 def pausar_pantalla():
     print('Pulse Enter para continuar... ')
@@ -37,9 +37,7 @@ def mostrar_clientes(tabla):
 
 def nuevaReserva(tablaDestino, tablaClientes):
         entraCod = input('Entra el código del destino: ')
-        #entraDest = input('Entra el destino: ')
         entraId = input('Entra la ID del cliente: ')
-        #entraCli = input('Entra el nombre del cliente: ')
         flag1 = False
         flag2 = False
         for entradaDest in tablaDestino:
@@ -50,14 +48,31 @@ def nuevaReserva(tablaDestino, tablaClientes):
             if entraId == entradaId['idCliente']:
                 flag2 = True
                 entraCli = entradaId['nombreCli']
-        while True:
-            if flag1 and flag2 == True:
-                reserva = {'codigoDestino' : entraCod , 'idCliente' : entraId , 'nombreCliente' : entraCli , 'nombreDestino' : entraDest}
-                return reserva
-            else:
-                break
+        if flag1 and flag2 == True:
+            reserva = {'codigoDestino' : entraCod , 'idCliente' : entraId , 'nombreCliente' : entraCli , 'nombreDestino' : entraDest}
+            return True, reserva
+        else:
+            return False, None
 
-            
+def cancelaReserva(tabla):
+        entraCod = input('Entra el código del destino: ')
+        entraId = input('Entra la ID del cliente: ')
+        flag1 = False
+        flag2 = False
+        j = 0
+        for entradaCod in tabla:
+            if entraCod == entradaCod['codigoDestino']:
+                flag1 = True
+                entraDest = entradaCod['nombreDestino']
+        for entradaId in tabla:
+            if entraId == entradaId['idCliente']:
+                flag2 = True
+                entraCli = entradaId['nombreCliente']
+        if flag1 and flag2 == True:
+            cancela = {'codigoDestino' : entraCod , 'idCliente' : entraId , 'nombreCliente' : entraCli , 'nombreDestino' : entraDest}
+            return True, cancela
+        else:
+            return False, None                
 
 def mostrar_reservas(tabla):
     for entrada in tabla:
@@ -98,23 +113,29 @@ def principal():
             limpiar_pantalla()
         elif menu == '2':
             print('Añadir un nuevo cliente')
-            if tablaClientes.append(nuevoCliente()):
-                print('Cliente añadido corectamente.')
-            else:    
-                print('El código del destino o ID del usuario no existe, intente nuevamente.')
+            tablaClientes.append(nuevoCliente())
+            print('Cliente añadido corectamente.')
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '3':
             print('Realizar una reserva')
-            
-            tablaReservas.append(nuevaReserva(tablaDestinos, tablaClientes))
-            print('Reserva añadida corectamente.')
+            verifica3, nuevaReserv = nuevaReserva(tablaDestinos, tablaClientes)
+            if verifica3 == True:
+                tablaReservas.append(nuevaReserv)
+                print('Reserva añadida corectamente.')
+            else:
+                print('El codigo de destino o ID del usuario no existe, intente nuevamente.')
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '4':
             print('Cancelar una reserva')
-            tablaReservas.pop()
-            print('La reserva fue cancelada.')
+            verifica4, cancela = cancelaReserva(tablaReservas)
+            if verifica4 == True:
+                #print(marcador4)
+                tablaReservas.remove(cancela)
+                print('La reserva fue cancelada.')
+            else:
+                print('El codigo de destino o ID del usuario no existe, intente nuevamente.')  
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '5':
