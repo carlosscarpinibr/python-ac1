@@ -50,13 +50,12 @@ def nuevaReserva(tablaDestino, tablaClientes):
             if entraId == entradaId['idCliente']:
                 flag2 = True
                 entraCli = entradaId['nombreCli']
-        
-        if flag1 and flag2 == True:
-            reserva = {'codigoDestino' : entraCod , 'idCliente' : entraId , 'nombreCliente' : entraCli , 'nombreDestino' : entraDest}
-            return reserva
-        else:
-            print('El código del destino o ID del usuario no existe, intente nuevamente.')
-            return False
+        while True:
+            if flag1 and flag2 == True:
+                reserva = {'codigoDestino' : entraCod , 'idCliente' : entraId , 'nombreCliente' : entraCli , 'nombreDestino' : entraDest}
+                return reserva
+            else:
+                break
 
             
 
@@ -99,8 +98,10 @@ def principal():
             limpiar_pantalla()
         elif menu == '2':
             print('Añadir un nuevo cliente')
-            tablaClientes.append(nuevoCliente())
-            print('Cliente añadido corectamente.')
+            if tablaClientes.append(nuevoCliente()):
+                print('Cliente añadido corectamente.')
+            else:    
+                print('El código del destino o ID del usuario no existe, intente nuevamente.')
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '3':
