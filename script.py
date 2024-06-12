@@ -30,9 +30,13 @@ def nuevaReserva(tablaDestino, tablaClientes):
     
     return reserva
 
-#def cancelarReserva(tablaReserva):
-#    tablaReserva.pop()
-    
+def mostrar_clientes(tabla):
+    for entrada in tabla:
+        print(f'ID: {entrada['idCliente']} - Nombre: {entrada['nombreCli']}')
+
+def mostrar_destinos(tabla):
+    for entrada in tabla:
+        print(f'Código: {entrada['codigoDest']} - Nombre: {entrada['nombreDest']} - Precio: {entrada['precioDest']} €')
 
 
 def principal():
@@ -58,7 +62,7 @@ def principal():
     while menu != '0':
         print(prompt)
         menu=input('Entre una opción: ')
-        limpiar_pantalla()
+        #limpiar_pantalla()
         if menu == '1':
             print('Añadir un nuevo destino')
             tablaDestinos.append(nuevoDestino())
@@ -85,14 +89,14 @@ def principal():
             limpiar_pantalla()
         elif menu == '5':
             print('Mostrar todos los destinos')
-            print(tablaDestinos)
+            mostrar_destinos(tablaDestinos)
             pausar_pantalla()
-            limpiar_pantalla()
+            #limpiar_pantalla()
         elif menu == '6':
             print('Mostrar todos los clientes')
-            print(tablaClientes)
+            mostrar_clientes(tablaClientes)
             pausar_pantalla()
-            limpiar_pantalla()
+            #limpiar_pantalla()
         elif menu == '7':
             print('Mostrar todas las reservas')
             print(tablaReservas)
