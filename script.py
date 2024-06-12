@@ -1,8 +1,8 @@
 import os
 
 def limpiar_pantalla():
-    os.system('clear') #clear screen mac
-    #os.system('cls') #clear screen windows
+    #os.system('clear') #clear screen mac
+    os.system('cls') #clear screen windows
     
 def pausar_pantalla():
     print('Pulse Enter para continuar... ')
@@ -17,6 +17,12 @@ def nuevoDestino():
     destino = {'codigoDest' : codDest , 'nombreDest' : nomDest , 'precioDest' : precDest}
     
     return destino
+
+def mostrar_destinos(tabla):
+    for entrada in tabla:
+        print(f'Código: {entrada['codigoDest']} - Nombre: {entrada['nombreDest']} - Precio: {entrada['precioDest']} €')
+
+
 def nuevoCliente():
     idCli = input('Entre un ID para el cliente: ')
     nomCli = input('Entre el nombre del cliente: ')
@@ -25,18 +31,40 @@ def nuevoCliente():
     
     return cliente
 
-def nuevaReserva(tablaDestino, tablaClientes):
-    reserva = {'codigoDestino' : tablaDestino[0], 'idCliente' : tablaClientes[0]}
-    
-    return reserva
-
 def mostrar_clientes(tabla):
     for entrada in tabla:
         print(f'ID: {entrada['idCliente']} - Nombre: {entrada['nombreCli']}')
 
-def mostrar_destinos(tabla):
+def nuevaReserva(tablaDestino, tablaClientes):
+        entraCod = input('Entra el código del destino: ')
+        #entraDest = input('Entra el destino: ')
+        entraId = input('Entra la ID del cliente: ')
+        #entraCli = input('Entra el nombre del cliente: ')
+        flag1 = False
+        flag2 = False
+        for entradaDest in tablaDestino:
+            if entraCod == entradaDest['codigoDest']:
+                flag1 = True
+                entraDest = entradaDest['nombreDest']
+        for entradaId in tablaClientes:
+            if entraId == entradaId['idCliente']:
+                flag2 = True
+                entraCli = entradaId['nombreCli']
+        
+        if flag1 and flag2 == True:
+            reserva = {'codigoDestino' : entraCod , 'idCliente' : entraId , 'nombreCliente' : entraCli , 'nombreDestino' : entraDest}
+            return reserva
+        else:
+            print('El código del destino o ID del usuario no existe, intente nuevamente.')
+            return False
+
+            
+
+def mostrar_reservas(tabla):
     for entrada in tabla:
-        print(f'Código: {entrada['codigoDest']} - Nombre: {entrada['nombreDest']} - Precio: {entrada['precioDest']} €')
+        print(f'ID: {entrada['idCliente']} - Nombre: {entrada['nombreCliente']} - Destino: {entrada['codigoDestino']} - {entrada['nombreDestino']} ')
+
+
 
 
 def principal():
@@ -77,6 +105,7 @@ def principal():
             limpiar_pantalla()
         elif menu == '3':
             print('Realizar una reserva')
+            
             tablaReservas.append(nuevaReserva(tablaDestinos, tablaClientes))
             print('Reserva añadida corectamente.')
             pausar_pantalla()
@@ -99,7 +128,7 @@ def principal():
             #limpiar_pantalla()
         elif menu == '7':
             print('Mostrar todas las reservas')
-            print(tablaReservas)
+            mostrar_reservas(tablaReservas)
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '0':
