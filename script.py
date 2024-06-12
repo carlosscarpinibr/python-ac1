@@ -14,6 +14,15 @@ def nuevoCliente():
     
     return cliente
 
+def nuevaReserva(tablaDestino, tablaClientes):
+    reserva = {'codigoDestino' : tablaDestino[0], 'idCliente' : tablaClientes[0]}
+    
+    return reserva
+
+#def cancelarReserva(tablaReserva):
+#    tablaReserva.pop()
+    
+
 
 def principal():
     prompt = '''    
@@ -46,8 +55,10 @@ def principal():
             tablaClientes.append(nuevoCliente())
         elif menu == '3':
             print('Realizar una reserva')
+            tablaReservas.append(nuevaReserva(tablaDestinos, tablaClientes))
         elif menu == '4':
             print('Cancelar una reserva')
+            tablaReservas.pop()
         elif menu == '5':
             print('Mostrar todos los destinos')
             print(tablaDestinos)
@@ -56,6 +67,7 @@ def principal():
             print(tablaClientes)
         elif menu == '7':
             print('Mostrar todas las reservas')
+            print(tablaReservas)
         elif menu == '0':
             print('Fin del programa')
         else:
