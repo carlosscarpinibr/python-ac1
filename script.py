@@ -9,7 +9,7 @@ print('otra cosa')
 
 
 
-
+#funcion principal
 def principal():
 
     promt = ''' Menú Agencia de Viajes
@@ -23,35 +23,74 @@ def principal():
     8. Salir
     '''
 
-    while opcion !='8':
-        print(promt)
     opcion = input("Seleccione una opción: ")
+
     if opcion == '1':
-        codigo = input("Ingrese el código del destino: ")
+        codigo = int(input("Ingrese el código del destino: "))
         nombre = input("Ingrese el nombre del destino: ")
         precio = float(input("Ingrese el precio del destino: "))
-        print(codigo, nombre, precio)
-        print("Destino añadido con éxito.")
+        anadirDestino(codigo, nombre, precio)
+        
     elif opcion == '2':
-        mostrar_destinos()
-    elif opcion == '3':
-        idCliente = input("Ingrese el ID del cliente: ")
+        idCliente = int(input("Ingrese el ID del cliente: "))
         nombre = input("Ingrese el nombre del cliente: ")
-        print("Cliente añadido con éxito.")
+        anadirCliente(idCliente, nombre)
+        
+    elif opcion == '3':
+        codigoDestino = int(input("Ingrese el código del destino: "))
+        idCliente = int(input("Ingrese el ID del cliente: "))
+        realizarReserva(codigoDestino, idCliente)
+        
     elif opcion == '4':
-        mostrar_clientes()
+        codigoDestino = int(input("Ingrese el código del destino: "))
+        idCliente = int(input("Ingrese el ID del cliente: "))
+        cancelarReserva(codigoDestino, idCliente)
+        
     elif opcion == '5':
-        idCliente = input("Ingrese el ID del cliente: ")
-        codigo_destino = input("Ingrese el código del destino: ")
-        print("Reserva realizada con éxito.")
+        mostrarDestinos()
+        
     elif opcion == '6':
-        idCliente = input("Ingrese el ID del cliente: ")
-        codigo_destino = input("Ingrese el código del destino: ")
-        print("Reserva cancelada con éxito.")
+        mostrarClientes()
+        
     elif opcion == '7':
-        mostrar_reservas()
+        mostrarReservas()
+        
     elif opcion == '8':
-        print("Saliendo del programa.")
         break
+        
     else:
-        print("Opción no válida. Intente de nuevo.")
+        print("Opción no válida, por favor intente de nuevo.")
+
+
+
+
+# creamos listas
+destinos = []
+clientes = []
+reservas = []
+
+# Nuevo destino
+def anadirDestino(codigo, nombre, precio):
+    destino = {'codigo': codigo, 'nombre': nombre, 'precio': precio}
+    destinos.append(destino)
+    print(f'Destino {nombre} añadido.')
+
+# Nuevo cliente
+def anadirCliente(idCliente, nombre):
+    cliente = {'id_cliente': idCliente, 'nombre': nombre}
+    clientes.append(cliente)
+    print(f'Cliente {nombre} añadido.')
+
+# Existe destino 
+def destinoExiste(codigoDestino):
+    for destino in destinos:
+        if destino['codigo'] == codigoDestino:
+            return True
+    return False
+
+# cliente existe
+def clienteExiste(idCliente):
+    for cliente in clientes:
+        if cliente['id_cliente'] == idCliente:
+            return True
+    return False
