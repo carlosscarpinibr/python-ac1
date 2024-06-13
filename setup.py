@@ -5,7 +5,7 @@ setup (
     version='1.0',
     description='Conjunto de funciones para manipular una agencia de viajes',
     author='Carlos, Albert, Caleb',
-    author_email='carlosscarpinibr@gmail.com',
+    author_email='carlosscarpinibr@gmail.com, aomunte@gmail.com, jcalebm76@gmail.com',
     url='https://github.com/carlosscarpinibr/python-ac1',
     packages=['agenciaviaje', 'agenciaviaje.cliente', 'agenciaviaje.destino', 'agenciaviaje.reserva'],
     scripts=[]
