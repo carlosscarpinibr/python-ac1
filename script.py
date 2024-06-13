@@ -10,9 +10,24 @@ def pausar_pantalla():
 
 
 def nuevoDestino():
-    codDest = input('Entra el codigo del destino: ')
-    nomDest = input('Entra el nombre del destino: ')
-    precDest = input('Entra el precio del destino: ')
+    while True:
+        codDest = input('Entra el codigo del destino: ')
+        if codDest == '':
+            print('El campo no puede estar vacio, intente nuevamente.')
+        else:
+            break
+    while True:
+        nomDest = input('Entra el nombre del destino: ')
+        if nomDest == '':
+            print('El campo no puede estar vacio, intente nuevamente.')
+        else:
+            break
+    while True:
+        try:    
+            precDest = float(input('Entra el precio del destino: '))
+            break
+        except ValueError:
+            print('Caractere inválido, intente nuevamente.')
     
     destino = {'codigoDest' : codDest , 'nombreDest' : nomDest , 'precioDest' : precDest}
     
@@ -24,9 +39,19 @@ def mostrar_destinos(tabla):
 
 
 def nuevoCliente():
-    idCli = input('Entre un ID para el cliente: ')
-    nomCli = input('Entre el nombre del cliente: ')
-    
+    while True:
+        try:
+            idCli = int(input('Entre un ID para el cliente: '))
+            break
+        except ValueError:
+            print('Caractere inválido, intente nuevamente.')
+    while True:       
+        nomCli = input('Entre el nombre del cliente: ')
+        if nomCli == '':
+            print('El campo no puede estar vacio, intente nuevamente.')
+        else:
+            break
+            
     cliente = {'idCliente' : idCli , 'nombreCli' : nomCli}
     
     return cliente
@@ -36,8 +61,18 @@ def mostrar_clientes(tabla):
         print(f'ID: {entrada['idCliente']} - Nombre: {entrada['nombreCli']}')
 
 def nuevaReserva(tablaDestino, tablaClientes):
-        entraCod = input('Entra el código del destino: ')
-        entraId = input('Entra la ID del cliente: ')
+        while True:
+            entraCod = input('Entra el código del destino: ')
+            if entraCod == '':
+                print('El campo no puede estar vacio, intente nuevamente.')
+            else:
+                break
+        while True:
+            try:    
+                entraId = int(input('Entra la ID del cliente: '))
+                break
+            except ValueError:
+                print('Caractere inválido, intente nuevamente.')
         flag1 = False
         flag2 = False
         for entradaDest in tablaDestino:
@@ -55,11 +90,20 @@ def nuevaReserva(tablaDestino, tablaClientes):
             return False, None
 
 def cancelaReserva(tabla):
-        entraCod = input('Entra el código del destino: ')
-        entraId = input('Entra la ID del cliente: ')
+        while True:
+            entraCod = input('Entra el código del destino: ')
+            if entraCod == '':
+                print('El campo no puede estar vacio, intente nuevamente.')
+            else:
+                break
+        while True:
+            try:    
+                entraId = int(input('Entra la ID del cliente: '))
+                break
+            except ValueError:
+                print('Caractere inválido, intente nuevamente.')
         flag1 = False
         flag2 = False
-        j = 0
         for entradaCod in tabla:
             if entraCod == entradaCod['codigoDestino']:
                 flag1 = True
@@ -78,7 +122,11 @@ def mostrar_reservas(tabla):
     for entrada in tabla:
         print(f'ID: {entrada['idCliente']} - Nombre: {entrada['nombreCliente']} - Destino: {entrada['codigoDestino']} - {entrada['nombreDestino']} ')
 
-
+def verifica_lista(lista):
+    if len(lista) == 0:
+        return False
+    else:
+        return True
 
 
 def principal():
@@ -104,53 +152,67 @@ def principal():
     while menu != '0':
         print(prompt)
         menu=input('Entre una opción: ')
-        #limpiar_pantalla()
+        limpiar_pantalla()
         if menu == '1':
-            print('Añadir un nuevo destino')
+            print('1. Añadir un nuevo destino\n')
             tablaDestinos.append(nuevoDestino())
             print('Destino añadido corectamente.')
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '2':
-            print('Añadir un nuevo cliente')
+            print('2. Añadir un nuevo cliente\n')
             tablaClientes.append(nuevoCliente())
             print('Cliente añadido corectamente.')
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '3':
-            print('Realizar una reserva')
-            verifica3, nuevaReserv = nuevaReserva(tablaDestinos, tablaClientes)
-            if verifica3 == True:
-                tablaReservas.append(nuevaReserv)
-                print('Reserva añadida corectamente.')
+            print('3. Realizar una reserva\n')
+            if verifica_lista(tablaDestinos) and verifica_lista(tablaClientes)  == True:
+                verifica3, nuevaReserv = nuevaReserva(tablaDestinos, tablaClientes)
+                if verifica3 == True:
+                    tablaReservas.append(nuevaReserv)
+                    print('Reserva añadida corectamente.')
+                else:
+                    print('El codigo del destino o ID del usuario no existe, intente nuevamente.')
             else:
-                print('El codigo de destino o ID del usuario no existe, intente nuevamente.')
+                print('No hay codigo del destino o ID del usuario registrado en el sistema.')
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '4':
-            print('Cancelar una reserva')
-            verifica4, cancela = cancelaReserva(tablaReservas)
-            if verifica4 == True:
-                #print(marcador4)
-                tablaReservas.remove(cancela)
-                print('La reserva fue cancelada.')
+            print('4. Cancelar una reserva\n')
+            if verifica_lista(tablaReservas) == True:
+                verifica4, cancela = cancelaReserva(tablaReservas)
+                if verifica4 == True:
+                    tablaReservas.remove(cancela)
+                    print('La reserva fue cancelada.')
+                else:
+                    print('El codigo de destino o ID del usuario no existe, intente nuevamente.')
             else:
-                print('El codigo de destino o ID del usuario no existe, intente nuevamente.')  
+               print('La lista está vacía.')   
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '5':
-            print('Mostrar todos los destinos')
-            mostrar_destinos(tablaDestinos)
+            print('5. Mostrar todos los destinos\n')
+            if verifica_lista(tablaDestinos) == True:
+                mostrar_destinos(tablaDestinos)
+            else:
+                print('La lista está vacía.')
             pausar_pantalla()
-            #limpiar_pantalla()
+            limpiar_pantalla()
         elif menu == '6':
-            print('Mostrar todos los clientes')
-            mostrar_clientes(tablaClientes)
+            print('6. Mostrar todos los clientes\n')
+            if verifica_lista(tablaClientes) == True:
+                mostrar_clientes(tablaClientes)
+            else:
+               print('La lista está vacía.') 
             pausar_pantalla()
-            #limpiar_pantalla()
+            limpiar_pantalla()
         elif menu == '7':
-            print('Mostrar todas las reservas')
-            mostrar_reservas(tablaReservas)
+            print('7. Mostrar todas las reservas\n')
+            if verifica_lista(tablaReservas) == True:
+                mostrar_reservas(tablaReservas)
+            else:
+                print('La lista está vacía.') 
             pausar_pantalla()
             limpiar_pantalla()
         elif menu == '0':
