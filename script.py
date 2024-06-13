@@ -10,8 +10,8 @@ from agenciaviaje.reserva.reservation import mostrar_reservas
 
 
 def limpiar_pantalla():
-    os.system('clear') #clear screen mac
-    #os.system('cls') #clear screen windows
+    #os.system('clear') #clear screen mac
+    os.system('cls') #clear screen windows
     
 def pausar_pantalla():
     print('Pulse Enter para continuar... ')
