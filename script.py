@@ -9,6 +9,7 @@ from agenciaviaje.reserva.reservation import mostrar_reservas
 
 
 
+<<<<<<< HEAD
 def limpiar_pantalla():
     '''Descripcion: Funcion del OS que limpia la informacion de la consola
     '''
@@ -138,3 +139,8 @@ def principal():
 
 #Llama principal()
 principal()
+=======
+print('otra cosa')
+
+print('Contribución de Manu al repositorio de Carlos')
+>>>>>>> a0a12bed1699902056df90695b408229e2158fdf
