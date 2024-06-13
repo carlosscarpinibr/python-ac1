@@ -1,4 +1,13 @@
 import os
+from agenciaviaje.destino.destination import nuevoDestino
+from agenciaviaje.destino.destination import mostrar_destinos
+from agenciaviaje.cliente.client import nuevoCliente
+from agenciaviaje.cliente.client import mostrar_clientes
+from agenciaviaje.reserva.reservation import nuevaReserva
+from agenciaviaje.reserva.reservation import cancelaReserva
+from agenciaviaje.reserva.reservation import mostrar_reservas
+
+
 
 def limpiar_pantalla():
     os.system('clear') #clear screen mac
@@ -7,122 +16,6 @@ def limpiar_pantalla():
 def pausar_pantalla():
     print('Pulse Enter para continuar... ')
     input()
-
-
-def nuevoDestino():
-    while True:
-        codDest = input('Entra el codigo del destino: ').upper()
-        if codDest == '':
-            print('El campo no puede estar vacio, intente nuevamente.')
-        else:
-            break
-    while True:
-        nomDest = input('Entra el nombre del destino: ').upper()
-        if nomDest == '':
-            print('El campo no puede estar vacio, intente nuevamente.')
-        else:
-            break
-    while True:
-        try:    
-            precDest = float(input('Entra el precio del destino: '))
-            break
-        except ValueError:
-            print('Caractere inválido, intente nuevamente.')
-    
-    destino = {'codigoDest' : codDest , 'nombreDest' : nomDest , 'precioDest' : precDest}
-    
-    return destino
-
-def mostrar_destinos(tabla):
-    for entrada in tabla:
-        print(f'Código: {entrada['codigoDest']} - Nombre: {entrada['nombreDest']} - Precio: {entrada['precioDest']} €')
-
-
-def nuevoCliente():
-    while True:
-        try:
-            idCli = int(input('Entre un ID para el cliente: '))
-            break
-        except ValueError:
-            print('Caractere inválido, intente nuevamente.')
-    while True:       
-        nomCli = input('Entre el nombre del cliente: ').upper()
-        if nomCli == '':
-            print('El campo no puede estar vacio, intente nuevamente.')
-        else:
-            break
-            
-    cliente = {'idCliente' : idCli , 'nombreCli' : nomCli}
-    
-    return cliente
-
-def mostrar_clientes(tabla):
-    for entrada in tabla:
-        print(f'ID: {entrada['idCliente']} - Nombre: {entrada['nombreCli']}')
-
-def nuevaReserva(tablaDestino, tablaClientes):
-        while True:
-            entraCod = input('Entra el código del destino: ').upper()
-            if entraCod == '':
-                print('El campo no puede estar vacio, intente nuevamente.')
-            else:
-                break
-        while True:
-            try:    
-                entraId = int(input('Entra la ID del cliente: '))
-                break
-            except ValueError:
-                print('Caractere inválido, intente nuevamente.')
-        flag1 = False
-        flag2 = False
-        for entradaDest in tablaDestino:
-            if entraCod == entradaDest['codigoDest']:
-                flag1 = True
-                entraDest = entradaDest['nombreDest']
-                entraPrec = entradaDest['precioDest']
-        for entradaId in tablaClientes:
-            if entraId == entradaId['idCliente']:
-                flag2 = True
-                entraCli = entradaId['nombreCli']
-        if flag1 and flag2 == True:
-            reserva = {'codigoDestino' : entraCod , 'idCliente' : entraId , 'nombreCliente' : entraCli , 'nombreDestino' : entraDest , 'precioDest' : entraPrec}
-            return True, reserva
-        else:
-            return False, None
-
-def cancelaReserva(tabla):
-        while True:
-            entraCod = input('Entra el código del destino: ').upper()
-            if entraCod == '':
-                print('El campo no puede estar vacio, intente nuevamente.')
-            else:
-                break
-        while True:
-            try:    
-                entraId = int(input('Entra la ID del cliente: '))
-                break
-            except ValueError:
-                print('Caractere inválido, intente nuevamente.')
-        flag1 = False
-        flag2 = False
-        for entradaCod in tabla:
-            if entraCod == entradaCod['codigoDestino']:
-                flag1 = True
-                entraDest = entradaCod['nombreDestino']
-                entraPrec = entradaCod['precioDest']
-        for entradaId in tabla:
-            if entraId == entradaId['idCliente']:
-                flag2 = True
-                entraCli = entradaId['nombreCliente']
-        if flag1 and flag2 == True:
-            cancela = {'codigoDestino' : entraCod , 'idCliente' : entraId , 'nombreCliente' : entraCli , 'nombreDestino' : entraDest , 'precioDest' : entraPrec}
-            return True, cancela
-        else:
-            return False, None                
-
-def mostrar_reservas(tabla):
-    for entrada in tabla:
-        print(f'Reserva de {entrada['nombreCliente']}, destino: {entrada['nombreDestino']}({entrada['codigoDestino']}) por {entrada['precioDest']} €.')
 
 def verifica_lista(lista):
     if len(lista) == 0:
@@ -185,8 +78,14 @@ def principal():
             if verifica_lista(tablaReservas) == True:
                 verifica4, cancela = cancelaReserva(tablaReservas)
                 if verifica4 == True:
-                    tablaReservas.remove(cancela)
-                    print('La reserva fue cancelada.')
+                    while True:
+                        try:
+                            tablaReservas.remove(cancela)
+                            print('La reserva fue cancelada.')
+                            break
+                        except ValueError:
+                            print('Reserva no existe, intente nuevamente.')
+                            break
                 else:
                     print('El codigo de destino o ID del usuario no existe, intente nuevamente.')
             else:
