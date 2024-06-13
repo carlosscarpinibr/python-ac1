@@ -10,19 +10,29 @@ from agenciaviaje.reserva.reservation import mostrar_reservas
 
 
 def limpiar_pantalla():
+    '''Descripcion: Funcion del OS que limpia la informacion de la consola
+    '''
     #os.system('clear') #clear screen mac
     os.system('cls') #clear screen windows
     
 def pausar_pantalla():
+    '''Descripcion: Funcion del OS que genera una pausa en la ejecucion del código
+    '''
     print('Pulse Enter para continuar... ')
     input()
 
 def verifica_lista(lista):
+    '''Descripcion: Funcion que sirve para verificar si la lista introducida esta vacia
+       Entrada: Una lista del programa principal
+       Salida: un valor booleano (False o True)
+    '''
     if len(lista) == 0:
         return False
     else:
         return True
 
+
+# Menu principal del programa de una cagencia de viajes está diseñado para gestionar y facilitar el proceso de reserva
 
 def principal():
     prompt = '''    
@@ -38,11 +48,14 @@ def principal():
                 0. Salir
             '''
     
+    # Variables de las listas que almacenan destinos, clientes y reservas
     tablaDestinos = []
     tablaClientes = []
     tablaReservas = []
     
     
+    
+    # Menú que presenta y solicita la informacion de cada uno de los pasos requeridos por el programa para la gestion de la misma
     menu = 0
     while menu != '0':
         print(prompt)
